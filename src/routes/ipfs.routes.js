@@ -1,5 +1,6 @@
 import express from "express";
 import * as ipfsClient from 'ipfs-http-client'
+import fs from "fs"
 
 
 const router = express.Router()
@@ -31,9 +32,18 @@ router.post("/", (req, res) => {
 
 
     const { file } = req.files
+    // console.log("---file- reader----")
+    // console.log(file)
+    // console.log("fin xd")
 
-    console.log(req.files)
-    console.log(req.body)
+    const fileReader = fs.createReadStream(file.tempFilePath)
+    const fileNameFormated = file.name.replace(/ /g, "")
+    console.log(fileNameFormated)
+
+
+
+    // console.log(req.files)
+    // console.log(req.body)
 
     res.status(200).json({
         message: "archivo subido"
