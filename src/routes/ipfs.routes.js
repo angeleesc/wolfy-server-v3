@@ -12,7 +12,23 @@ router.get("/", (req, res) => {
     })
 })
 
-router.post("/", async (req, res) => {
+router.post("/", (req, res, next) => {
+
+    if (req.body.nftsAtributes) {
+
+        let formatedAtributes = JSON.parse(req.body.nftsAtributes);
+        let atributesMetada = formatedAtributes.map(atribute => ({
+            "trait_type": atribute.key,
+            value: atribute.nftValue,
+            ...(atribute.display ? { "display_type": atribute.displayType } : {})
+
+        }))
+
+        req.body.nftsAtributes = atributesMetada
+    }
+
+    next()
+}, async (req, res) => {
 
     const projetIpf = process.env.IPFS_PROJECT_ID
     const secretIpfsId = process.env.IPFS_KEY_SECRET
@@ -39,19 +55,38 @@ router.post("/", async (req, res) => {
     console.log(fileNameFormated)
 
     try {
-       const fileAdded = await client.add(fileReader);
+        const fileAdded = await client.add(fileReader);
         console.log("subida exitosa")
-        console.log(fileAdded)
+        // console.log(fileAdded)
+        console.log(req.body)
+
+        // si se creo con exito entonces  creamos la netadata
+
+
+
+        const metadataFile = {
+
+        }
+
+
+        return res.status(200).json({
+            message: "operacion exitosa",
+        })
+
     } catch (error) {
         console.log("ocurrion un error")
         console.log(error)
+
+        res.status(500).json({
+            message: "lo sinento pero susedi un error durante la subida de archivos"
+        })
     }
 
 
 
 
     res.status(200).json({
-        message: "archivo subido"
+        message: "no se hizo nada con el archivo"
     })
 
 
