@@ -59,12 +59,16 @@ router.post("/", (req, res, next) => {
         console.log("subida exitosa")
         // console.log(fileAdded)
         console.log(req.body)
+        
 
         // si se creo con exito entonces  creamos la netadata
 
+        const  metadata = {
+
+            name: req.body.nftName,
+            description: req.body.nftDescription
 
 
-        const metadataFile = {
 
         }
 
