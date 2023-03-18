@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
     })
 })
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
 
     const projetIpf = process.env.IPFS_PROJECT_ID
     const secretIpfsId = process.env.IPFS_KEY_SECRET
@@ -38,11 +38,18 @@ router.post("/", (req, res) => {
     const fileNameFormated = file.name.replace(/ /g, "")
     console.log(fileNameFormated)
 
-    // tratamos de subir el archivo 
+    try {
+       const fileAdded = await client.add(fileReader);
+        console.log("subida exitosa")
+        console.log(fileAdded)
+    } catch (error) {
+        console.log("ocurrion un error")
+        console.log(error)
+    }
 
 
 
- 
+
     res.status(200).json({
         message: "archivo subido"
     })
