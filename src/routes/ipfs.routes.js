@@ -32,19 +32,17 @@ router.post("/", (req, res) => {
 
 
     const { file } = req.files
-    // console.log("---file- reader----")
-    // console.log(file)
-    // console.log("fin xd")
+
 
     const fileReader = fs.createReadStream(file.tempFilePath)
     const fileNameFormated = file.name.replace(/ /g, "")
     console.log(fileNameFormated)
 
+    // tratamos de subir el archivo 
 
 
-    // console.log(req.files)
-    // console.log(req.body)
 
+ 
     res.status(200).json({
         message: "archivo subido"
     })
