@@ -97,12 +97,12 @@ router.post(
         ...(req.body.youtubeUrl? {
           "youtube_url": req.body.youtubeUrl,
         }:{}),
-        
-      };
-      console.log("metadata----")
 
-      console.log(metadata)
-      console.log("--------")
+      };
+      // console.log("metadata----")
+
+      // console.log(metadata)
+      // console.log("--------")
 
       return res.status(200).json({
         message: "operacion exitosa",
