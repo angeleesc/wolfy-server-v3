@@ -14,6 +14,8 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res, next) => {
 
+    // adatacion de los formatos de la metadata
+
     if (req.body.nftsAtributes) {
 
         let formatedAtributes = JSON.parse(req.body.nftsAtributes);
@@ -26,6 +28,14 @@ router.post("/", (req, res, next) => {
 
         req.body.nftsAtributes = atributesMetada
     }
+
+    // verificar si el tipo de la imagen es una imagen o es un video
+    console.log (req.files);
+
+    if(req.files.mimetype){
+        
+    }
+
 
     next()
 }, async (req, res) => {
@@ -57,8 +67,12 @@ router.post("/", (req, res, next) => {
     try {
         const fileAdded = await client.add(fileReader);
         console.log("subida exitosa")
-        // console.log(fileAdded)
+        console.log(fileAdded)
         console.log(req.body)
+
+
+
+
         
 
         // si se creo con exito entonces  creamos la netadata
@@ -66,7 +80,10 @@ router.post("/", (req, res, next) => {
         const  metadata = {
 
             name: req.body.nftName,
-            description: req.body.nftDescription
+            description: req.body.nftDescription,
+            ...(req.body.nftsAtributes? {attributes: req.body.nftsAtributes}: {}),
+     
+            
 
 
 
