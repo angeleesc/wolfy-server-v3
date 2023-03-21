@@ -111,6 +111,8 @@ router.post(
 
       return res.status(200).json({
         message: "operacion exitosa",
+        metadata,
+        urlMetadata: `ipfs://${metadaTaHash.path}`
       });
     } catch (error) {
       console.log("ocurrion un error");
