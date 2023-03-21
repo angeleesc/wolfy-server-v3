@@ -104,6 +104,11 @@ router.post(
       // console.log(metadata)
       // console.log("--------")
 
+      const metadaTaHash = await client.add(JSON.stringify(metadata))
+      console.log("metada hash")
+      console.log (metadaTaHash)
+      console.log("------------")
+
       return res.status(200).json({
         message: "operacion exitosa",
       });
