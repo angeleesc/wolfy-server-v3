@@ -45,6 +45,10 @@ router.post(
   async (req, res) => {
     const projetIpf = process.env.IPFS_PROJECT_ID;
     const secretIpfsId = process.env.IPFS_KEY_SECRET;
+
+    console.log(projetIpf)
+    console.log(secretIpfsId)
+
     const auth =
       "Basic " + Buffer.from(projetIpf + ":" + secretIpfsId).toString("base64");
 
