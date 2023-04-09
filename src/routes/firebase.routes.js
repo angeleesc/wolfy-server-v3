@@ -18,7 +18,6 @@ router.post("/orders-nfts", async (req, res) => {
 
 
     const orderRef = db.collection("orders").limit(40)
-
     const results = await orderRef.get()
 
 
@@ -33,6 +32,8 @@ router.post("/orders-nfts", async (req, res) => {
                 id: result.id,
                 ...result.data()
             })
+
+            
 
         })
 
