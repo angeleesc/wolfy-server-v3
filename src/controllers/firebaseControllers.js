@@ -36,3 +36,11 @@ const {  lastReaf, isSuccess, reason, dataToResponse  } =  await getOrdersServec
     }    
 
 
+    export const getOrdersByUser = async (req, res)=>{
+
+        c
+
+        res.json({
+            message: "estas en la ruta de usario"
+        })
+    }

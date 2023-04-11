@@ -19,6 +19,18 @@ router.post("/orders-nfts", getOrders )
 
 router.post("/orders-by-users", (req, res) => {
 
+    const { user, fillter } = req.body
+
+    if(!user) {
+
+        res.status(500).send({
+            message: "lo siento pero el nopmbre de usuario es requerido"
+        })
+
+        return
+
+    }
+
     res.send({
         message: "estas en la ruta de ordenes por usuario"
     })
