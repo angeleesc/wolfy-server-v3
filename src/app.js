@@ -4,6 +4,7 @@ import cors from "cors";
 import fileUpload from "express-fileupload";
 import ipfsRoutes from "./routes/ipfs.routes.js"
 import firebaseRoutes from "./routes/firebase.routes.js"
+import alchemyRoutes from "./routes/alchemy.rotes.js"
 
 app.use(cors())
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use(
 
 app.use("/api/v1/ipfs", ipfsRoutes)
 app.use("/api/v1/firebase", firebaseRoutes)
+app.use("/api/v1/alchemy", alchemyRoutes)
 
 
 app.get("/", (req, res) => {
