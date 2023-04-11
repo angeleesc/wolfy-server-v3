@@ -1,12 +1,7 @@
 import express from "express";
 const routes = express.Router()
+import { getNftsByWallet } from "../controllers/alchemiController.js";
 
-routes.get("/", (req, res) => {
-    console.log("esta en la ruta de alchemy")
-    console.log(process.env.ALCHEMY_API_KEY)
-    res.json({
-        message: "estas en la ruta de alchemy"
-    })
-})
+routes.get("/",getNftsByWallet)
 
 export default routes
