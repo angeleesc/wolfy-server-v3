@@ -15,16 +15,16 @@ router.get("/", async (req, res) => {
     })
 })
 
-router.post("/orders-nfts", getOrders )
+router.post("/orders-nfts", getOrders)
 
 router.post("/orders-by-users", (req, res) => {
 
-    const { user, fillter } = req.body
+    const { wallet, fillter } = req.body
 
-    if(!user) {
+    if (!wallet) {
 
         res.status(500).send({
-            message: "lo siento pero el nopmbre de usuario es requerido"
+            message: "lo siento pero la wallet del usuario es requerido"
         })
 
         return
