@@ -53,10 +53,11 @@ export const getOrdersByUser = async (req, res) => {
 
 
 
-    const data = await getOrdersByUserServices(wallet, fillter)
+    const detaToSend = await getOrdersByUserServices(wallet, fillter)
 
     res.send({
-        message: "estas en la ruta de ordenes por usuario"
+        message: "estas en la ruta de ordenes por usuario",
+        ...detaToSend
     })
 
 }
