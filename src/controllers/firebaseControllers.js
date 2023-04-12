@@ -6,7 +6,7 @@ export const getOrders = async (req, res) => {
 
     const { lastReaf, isSuccess, reason, dataToResponse } = await getOrdersServeces()
 
-    // console.log(dataToResponse)
+    console.log(dataToResponse)
 
 
     if (isSuccess === true) {

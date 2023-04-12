@@ -13,19 +13,25 @@ export const getOrdersServeces = async (pararam) => {
             results.forEach((result) => {
 
 
+       
+
                 dataToResponse.push({
                     id: result.id,
                     ...result.data()
                 })
 
+            
 
-                return {
-                    isSuccess: true,
-                    dataToResponse,
-                    lastRef: results.docs[results.docs.length - 1].id
-                }
+
+       
 
             })
+
+            return {
+                isSuccess: true,
+                dataToResponse,
+                lastRef: results.docs[results.docs.length - 1].id
+            }
         }
 
         return {
