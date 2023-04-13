@@ -1,6 +1,6 @@
 import { db } from "../firebase/admind.js"
 
-export const getOrdersServeces = async (pararam) => {
+export const getOrdersServeces = async (fillter, wallet) => {
 
 
     const orderRef = db.collection("orders").limit(40)
@@ -13,17 +13,17 @@ export const getOrdersServeces = async (pararam) => {
             results.forEach((result) => {
 
 
-       
+
 
                 dataToResponse.push({
                     id: result.id,
                     ...result.data()
                 })
 
-            
 
 
-       
+
+
 
             })
 
@@ -64,9 +64,14 @@ export const getOrdersByUserServices = async (wallet, fillter) => {
 
             orderResult.forEach((order) => {
                 // console.log(order.data())
+
+                const { seller } = order.data()
+               
+                // console.log(seller)
+
                 orders.push({
                     ...order.data(),
-                    id: order.id
+                    id: order.id,
                 })
             })
 

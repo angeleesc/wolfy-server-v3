@@ -4,6 +4,17 @@ import { Alchemy, Network } from "alchemy-sdk"
 export async function getNftsByWallet(req, res) {
 
 
+    const { acccount } = req.query
+    console.log("ceuanta")
+    console.log(acccount)
+    if(!acccount){
+        console.log("lo siento pero cuenta es requerid")
+        res.status(500).json({
+            message: "los siento pero el nombre de la cuenta es requerida"
+        })
+    }
+
+
     const settings = {
         apiKey: process.env.ALCHEMY_API_KEY,
         network: Network.OPT_GOERLI,
@@ -12,7 +23,7 @@ export async function getNftsByWallet(req, res) {
 
     const alchemy = new Alchemy(settings);
 
-    const nfts = await alchemy.nft.getNftsForOwner("0x23b057357893Fb958571f81197823D6B1e84d64f", {
+    const nfts = await alchemy.nft.getNftsForOwner(acccount, {
         pageSize: 10
     });
     // console.log(nfts)
@@ -38,7 +49,7 @@ export async function getNftsByWallet(req, res) {
         }
     })
 
-    console.log(nftsFormated)
+    // console.log(nftsFormated)
 
 
 
