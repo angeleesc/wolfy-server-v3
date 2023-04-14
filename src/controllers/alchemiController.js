@@ -24,28 +24,41 @@ export async function getNftsByWallet(req, res) {
     const alchemy = new Alchemy(settings);
 
     const nfts = await alchemy.nft.getNftsForOwner(acccount, {
-        pageSize: 10
+        // pageSize: 10
     });
     // console.log(nfts)
+    // nfts.ownedNfts.forEach
+
+
+
 
 
     console.log("esta en la ruta de alchemy")
     console.log(process.env.ALCHEMY_API_KEY)
 
     const nftsFormated = nfts.ownedNfts.map((nfts) => {
+
+        // console.log(nfts.contract)
+        console.log(nfts)
+
+    
+
         return {
             collection: nfts.contract.address,
             collectionType: nfts.contract.tokenType,
             tokenId: nfts.tokenId,
             rawMetadata: nfts.tokenUri,
-            thumbnails: nfts.media.map((media) => {
+            thumbnails:   nfts.media.map((media) => {
                 return {
-                    thumbnail: media.thumbnail,
+                    url: media.thumbnail,
                     format: media.format
                 }
+            }),
+            nftName: nfts.title,
+            nftType: nfts.tokenType,
 
 
-            })
+
         }
     })
 
