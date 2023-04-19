@@ -61,16 +61,39 @@ export async function getNftsByWallet(req, res) {
         // console.log(nfts.contract)
         // console.log(nfts)
 
+        // console.log(nfts.title)
+        // console.log(nfts.media[0].thumbnail)
+        // if(nfts.media[0].thumbnail){
+        //     console.log("tiene miniatura")
+        // }else{
+        //     console.log("no tiene miniatura")
+        // }
+        // console.log(nfts.media[0])
 
+        console.log(nfts.media[0].thumbnail)
 
-        return {
+        console.log(nfts.title)
+        // console.log(nfts.media[0])
+
+        if (nfts.media[0].thumbnail) {
+            console.log("tiene miniatura")
+        } else {
+            console.log("no tiene miniatura")
+        }
+        if (nfts.media[0].gateway) {
+            console.log("tiene enlace")
+        } else {
+            console.log("no tiene enlace")
+        }
+
+        const dataToSent = {
             collection: nfts.contract.address,
             collectionType: nfts.contract.tokenType,
             tokenId: nfts.tokenId,
             rawMetadata: nfts.tokenUri,
             thumbnails: nfts.media.map((media) => {
                 return {
-                    url: media.thumbnail,
+                    url: media.thumbnail ? media.thumbnail : media.gateway,
                     format: media.format
                 }
             }),
@@ -79,9 +102,11 @@ export async function getNftsByWallet(req, res) {
             chainId: chainId.toString(),
             blockChainNetowork
 
-
-
         }
+
+        console.log(dataToSent.thumbnails)
+
+        return dataToSent
     })
 
     // console.log(nftsFormated)
