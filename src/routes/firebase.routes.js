@@ -1,6 +1,6 @@
 import express from "express"
 import { db } from "../firebase/admind.js"
-import { getOrders, getOrdersByUser } from "../controllers/firebaseControllers.js"
+import { GetAcutionOdersByBuyer, getOrders, getOrdersByUser } from "../controllers/firebaseControllers.js"
 
 const router = express.Router()
 
@@ -19,10 +19,6 @@ router.post("/orders-nfts", getOrders)
 
 router.post("/orders-by-users", getOrdersByUser)
 
-router.get("/oresers-bids/:id", async (req, res) => {
-
-    const {id } = req.params
-
-})
+router.get("/oresers-bids/:id", GetAcutionOdersByBuyer)
 
 export default router

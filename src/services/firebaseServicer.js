@@ -96,3 +96,9 @@ export const getOrdersByUserServices = async (wallet, fillter) => {
     }
 
 }
+
+export const GetAcutionOdersByBuyerServicer = async(id)=>{
+
+    const buyerOrdersQuery = db.collection("users").doc(id).collection("orders-bid")
+
+}

@@ -62,3 +62,19 @@ export const getOrdersByUser = async (req, res) => {
 
 }
 
+
+
+export const GetAcutionOdersByBuyer = async (req, res) => {
+
+    const { id } = req.params
+
+    const buyerOrdersQuery = db
+
+    console.log(id)
+
+    res.status(200).json({
+        isSuccess: true,
+        message: "estas en la ruta obtencion de las ofertas hechas por el usuario"
+    })
+
+}
