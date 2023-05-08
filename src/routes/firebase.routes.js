@@ -19,4 +19,10 @@ router.post("/orders-nfts", getOrders)
 
 router.post("/orders-by-users", getOrdersByUser)
 
+router.get("/oresers-bids/:id", async (req, res) => {
+
+    const {id } = req.params
+
+})
+
 export default router
