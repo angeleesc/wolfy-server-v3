@@ -1,4 +1,4 @@
-import { getOrdersByUserServices, getOrdersServeces } from "../services/firebaseServicer.js"
+import { GetAcutionOdersByBuyerServicer, getOrdersByUserServices, getOrdersServeces } from "../services/firebaseServicer.js"
 
 export const getOrders = async (req, res) => {
 
@@ -68,13 +68,34 @@ export const GetAcutionOdersByBuyer = async (req, res) => {
 
     const { id } = req.params
 
-    const buyerOrdersQuery = db
+    try {
+        const dataToResponse = await GetAcutionOdersByBuyerServicer(id)
 
-    console.log(id)
+        console.log(id)
 
-    res.status(200).json({
-        isSuccess: true,
-        message: "estas en la ruta obtencion de las ofertas hechas por el usuario"
-    })
+       if(dataToResponse.isSuccess){
+        res.status(200).json({
+            isSuccess: true,
+            message: "estas en la ruta obtencion de las ofertas hechas por el usuario",
+            ...dataToResponse
+        })
 
+        return
+       }
+
+       throw new error("Ocurrion un erro en la consulta de la base de datos")
+        
+
+    } catch (error) {
+
+        res.status(200).json({
+            isSuccess:false,
+            reason: "ocurrio un error mientras consultaba la bse de datos"
+        })
+
+        return
+
+    }
+
+    
 }

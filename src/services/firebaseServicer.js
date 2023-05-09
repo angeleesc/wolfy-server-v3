@@ -66,7 +66,7 @@ export const getOrdersByUserServices = async (wallet, fillter) => {
                 // console.log(order.data())
 
                 const { seller } = order.data()
-               
+
                 // console.log(seller)
 
                 orders.push({
@@ -97,8 +97,53 @@ export const getOrdersByUserServices = async (wallet, fillter) => {
 
 }
 
-export const GetAcutionOdersByBuyerServicer = async(id)=>{
+export const GetAcutionOdersByBuyerServicer = async (id) => {
 
     const buyerOrdersQuery = db.collection("users").doc(id).collection("orders-bid")
+
+    try {
+
+        const buyersOrdersResults = await buyerOrdersQuery.get()
+
+        if (!buyersOrdersResults.empty) {
+
+            const dataToSend = []
+
+            buyersOrdersResults.forEach(buyerOrder => {
+
+                dataToSend.push({
+                    ...buyerOrder.data(),
+                    idDb: buyerOrder.id
+
+                })
+
+            })
+
+            console.log("dataos a enviar")
+
+            console.log(dataToSend)
+
+            return {
+                isSuccess: true,
+                hasData: true,
+                orders: dataToSend
+            }
+
+        }
+
+
+        return {
+            isSuccess: true,
+            hasData: false
+        }
+
+    } catch (error) {
+        return {
+            isSuccess: false
+        }
+
+    }
+
+
 
 }
