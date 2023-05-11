@@ -20,7 +20,7 @@ export async function getNftsByWallet(req, res) {
 
 
     const { acccount } = req.query
-    console.log("ceuanta")
+    console.log("cuenta")
     console.log(acccount)
     if (!acccount) {
         console.log("lo siento pero cuenta es requerid")
@@ -115,6 +115,13 @@ export async function getFullNftData(req, res) {
     const { collection, id, tokenId } = req.query
 
     console.log(req.query)
+
+    const settings = {
+        apiKey: process.env.ALCHEMY_API_KEY,
+        network: Network.OPT_GOERLI,
+    };
+
+    const alchemy = new Alchemy(settings);
 
 
 
