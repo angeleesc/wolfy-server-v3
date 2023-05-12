@@ -117,11 +117,19 @@ export async function getFullNftData(req, res) {
     console.log(req.query)
 
     const settings = {
-        apiKey: process.env.ALCHEMY_API_KEY,
-        network: Network.OPT_GOERLI,
+        // apiKey: process.env.ALCHEMY_API_KEY,
+        apiKey: process.env.ALCHEMY_API_KEY_ETH,
+        // network: Network.OPT_GOERLI,
+        network: Network.ETH_MAINNET
     };
 
     const alchemy = new Alchemy(settings);
+
+    if (collection != "none" && tokenId != "none") {
+        const data = await alchemy.nft.getNftMetadata(collection, tokenId)
+        console.log("metadata obtenida")
+        console.log(data)
+    }
 
 
 
