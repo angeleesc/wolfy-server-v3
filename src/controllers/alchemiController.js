@@ -164,14 +164,26 @@ export async function getFullNftData(req, res) {
         }
 
         const { orderId, price, currentPrice, onSale, seller, saleMethod } = orderResult.data()
-        
+
         dataToSend.onSale = orderId
-        dataToSend.price = currentPrice? currentPrice: price
+        dataToSend.price = currentPrice ? currentPrice : price
         dataToSend.quantity = onSale
         dataToSend.seller = seller,
-        dataToSend.saleMethod = saleMethod
+            dataToSend.saleMethod = saleMethod
 
-        // obtenemos los datos de la nft
+        // obtenemos los datos de la nft con lla referencia actual pero primero obtemos el token id
+        // y para eso obtenemos los datos guardado desde el contrato
+
+        let tokenId
+
+        if (saleMethod === saleMethodOp.auction) {
+            const contract = await conectAuctionContrac(provider)
+            const ethOrderData = await contract.auctions(orderId)
+
+            console.log("orden obtenenida desde el contrato inteligente")
+            console.log(ethOrderData)
+
+        }
 
 
 
