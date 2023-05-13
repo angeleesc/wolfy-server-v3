@@ -142,6 +142,25 @@ export async function getFullNftData(req, res) {
 
     // obtenemos lo datos de la nft
 
+    if (id) {
+        console.log("orteniendo los datos de la orden en la mk")
+        const orderRef = db.collection("orders").doc(id)
+        const result = await orderRef.get()
+        if (result.exists) {
+            const orderData = {
+                ...result.data()
+            }
+
+            dataToSend.orderData = orderData
+        }else{
+            console.log("no exite el documento")
+        }
+
+        // obtenemos los datos del contrato de la marketplace
+        
+
+    }
+
     if (collection != "none" && tokenId != "none") {
 
 
@@ -153,6 +172,8 @@ export async function getFullNftData(req, res) {
         // console.log(data)
 
         // verificamos si hay datos
+
+
 
         if (data.media && data.media.length > 0) {
 
@@ -234,21 +255,7 @@ export async function getFullNftData(req, res) {
 
     }
 
-    if (id) {
-        console.log("orteniendo los datos de la orden en la mk")
-        const orderRef = db.collection("orders").doc(id)
-        const result = await orderRef.get()
-        if (result.exists) {
-            const orderData = {
-                ...result.data()
-            }
 
-            dataToSend.orderData = orderData
-        }else{
-            console.log("no exite el documento")
-        }
-
-    }
 
 
     console.log("datos para enviar")
