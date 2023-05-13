@@ -4,6 +4,7 @@ import ERC721UUPSabi from "../abis/ERC721UUPS.js"
 import { db } from "../firebase/admind.js"
 import { saleMethod as saleMethodOp, smartContracts } from "../helpers/global-constants.js"
 import auctionAbi from "../abis/auction.js"
+import marketAbI from "../abis/marketplace.js"
 
 export async function connectErc721Contrac(provider, contractAdress) {
     let wallet = Wallet.fromPhrase(process.env.MNEMONIC)
@@ -16,6 +17,13 @@ export async function conectAuctionContrac(provider) {
     let wallet = Wallet.fromPhrase(process.env.MNEMONIC)
     wallet = wallet.connect(provider)
     const contract = new ethers.Contract(smartContracts.Auction, auctionAbi, wallet)
+    return contract
+}
+
+export async function conectMakertContrac(provider) {
+    let wallet = Wallet.fromPhrase(process.env.MNEMONIC)
+    wallet = wallet.connect(provider)
+    const contract = new ethers.Contract(smartContracts.market, marketAbI, wallet)
     return contract
 }
 
@@ -181,7 +189,22 @@ export async function getFullNftData(req, res) {
             const ethOrderData = await contract.auctions(orderId)
 
             console.log("orden obtenenida desde el contrato inteligente")
-            console.log(ethOrderData)
+            // console.log(ethOrderData)
+            const { tokenId: ethTokenId } = ethOrderData
+            console.log("tokenId de referencia :", ethTokenId.toString())
+            tokenId = ethTokenId
+
+            // orbetemos la infiormacion acerca del token id tokenId
+
+        } else if (saleMethod === saleMethodOp.sales) {
+            const contract = await conectMakertContrac(provider)
+            const ethOrderData = await contract.getOrder(orderId)
+            // console.log(ethOrderData)
+
+            const {tokenID} = ethOrderData
+
+            console.log("token id de la venta")
+            console.log(tokenID[0].toString())
 
         }
 
