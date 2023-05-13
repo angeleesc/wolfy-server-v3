@@ -235,14 +235,17 @@ export async function getFullNftData(req, res) {
     }
 
     if (id) {
+        console.log("orteniendo los datos de la orden en la mk")
         const orderRef = db.collection("orders").doc(id)
         const result = await orderRef.get()
         if (result.exists) {
             const orderData = {
-                ...result.data
+                ...result.data()
             }
 
             dataToSend.orderData = orderData
+        }else{
+            console.log("no exite el documento")
         }
 
     }

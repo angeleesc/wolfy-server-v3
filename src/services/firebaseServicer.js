@@ -63,7 +63,7 @@ export const getOrdersByUserServices = async (wallet, fillter) => {
             const orders = []
 
             orderResult.forEach((order) => {
-                // console.log(order.data())
+                console.log(order.data())
 
                 const { seller } = order.data()
 
