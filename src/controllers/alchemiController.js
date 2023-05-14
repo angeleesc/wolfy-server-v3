@@ -28,6 +28,8 @@ export async function conectMakertContrac(provider) {
 }
 
 
+
+
 export async function getNftsByWallet(req, res) {
     // obtenemos el provider
 
@@ -138,14 +140,6 @@ export async function getFullNftData(req, res) {
 
     const provider = new ethers.JsonRpcProvider(process.env.ALCHEMY_PROVIDER_HTTP)
 
-    const settings = {
-        apiKey: process.env.ALCHEMY_API_KEY,
-        // apiKey: process.env.ALCHEMY_API_KEY_ETH,
-        network: Network.OPT_GOERLI,
-        // network: Network.ETH_MAINNET
-    };
-
-    const alchemy = new Alchemy(settings);
 
 
 
