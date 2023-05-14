@@ -1,3 +1,5 @@
+import { Alchemy } from "alchemy-sdk";
+
 export const getAlchemyNftData = async (nftsAddres, tokenId)=>{
 
     const settings = {
@@ -8,6 +10,11 @@ export const getAlchemyNftData = async (nftsAddres, tokenId)=>{
     };
 
     const alchemy = new Alchemy(settings);
+    const allNftsData = await alchemy.nft.getNftMetadata(nftsAddres, tokenId)
+
+    if (data.media && data.media.length > 0) {
+        
+    }
 
 
 
