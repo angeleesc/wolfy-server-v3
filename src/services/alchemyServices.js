@@ -1,4 +1,5 @@
 import { Alchemy, Network } from "alchemy-sdk";
+import { db } from "../firebase/admind.js";
 
 export const getAlchemyNftDataServices = async (nftsAddres, tokenId) => {
 
@@ -78,6 +79,18 @@ export const getAlchemyNftDataServices = async (nftsAddres, tokenId) => {
 
 
     } catch (error) {
+
+        console.log(error)
+
+        const errosRef = db.collection("erros").doc()
+
+        await errosRef.set({
+            message: error.message ? error.message : "ocurrio un error consultado datos en alchemy",
+            params: {
+                nftsAddres: nftsAddres ? nftsAddres : "nulo",
+                tokenId: tokenId ? tokenId : "nulo"
+            }
+        })
 
         return {
             isSucces: false
