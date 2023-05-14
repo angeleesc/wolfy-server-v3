@@ -5,6 +5,7 @@ import { db } from "../firebase/admind.js"
 import { saleMethod as saleMethodOp, smartContracts } from "../helpers/global-constants.js"
 import auctionAbi from "../abis/auction.js"
 import marketAbI from "../abis/marketplace.js"
+import { getAlchemyNftDataServices } from "../services/alchemyServices.js"
 
 export async function connectErc721Contrac(provider, contractAdress) {
     let wallet = Wallet.fromPhrase(process.env.MNEMONIC)
@@ -165,12 +166,15 @@ export async function getFullNftData(req, res) {
             return
         }
 
-        const { orderId, price, currentPrice, onSale, seller, saleMethod } = orderResult.data()
+        const { blockChain,
+            chainId, colection, colectionName, colectionSymbol, currentPrice, endTime, initPrice, metadata, onSale, orderId, price, saleMethod, seller } = orderResult.data()
 
         dataToSend.onSale = orderId
         dataToSend.price = currentPrice ? currentPrice : price
         dataToSend.quantity = onSale
         dataToSend.seller = seller,
+
+
             dataToSend.saleMethod = saleMethod
 
         // obtenemos los datos de la nft con lla referencia actual pero primero obtemos el token id
@@ -184,9 +188,13 @@ export async function getFullNftData(req, res) {
 
             console.log("orden obtenenida desde el contrato inteligente")
             // console.log(ethOrderData)
-            const { tokenId: ethTokenId } = ethOrderData
+            const {
+                tokenId: ethTokenId,
+            } = ethOrderData
             console.log("tokenId de referencia :", ethTokenId.toString())
             tokenId = ethTokenId
+
+            // const allNftDataRequets = await getAlchemyNftDataServices()
 
             // orbetemos la infiormacion acerca del token id tokenId
 
@@ -195,10 +203,16 @@ export async function getFullNftData(req, res) {
             const ethOrderData = await contract.getOrder(orderId)
             // console.log(ethOrderData)
 
-            const {tokenID} = ethOrderData
+            const { tokenID } = ethOrderData
 
             console.log("token id de la venta")
             console.log(tokenID[0].toString())
+
+            const alchemyData = await getAlchemyNftDataServices(colection, tokenID[0].toString())
+
+            console.log("datos obtenidos desde alchemy")
+            console.log(alchemyData)
+
 
         }
 

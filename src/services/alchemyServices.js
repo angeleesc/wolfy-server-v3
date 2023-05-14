@@ -1,6 +1,6 @@
-import { Alchemy } from "alchemy-sdk";
+import { Alchemy, Network } from "alchemy-sdk";
 
-export const getAlchemyNftData = async (nftsAddres, tokenId) => {
+export const getAlchemyNftDataServices = async (nftsAddres, tokenId) => {
 
     const dataToSend = {}
 
