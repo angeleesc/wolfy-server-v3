@@ -1,6 +1,8 @@
 import { Alchemy } from "alchemy-sdk";
 
-export const getAlchemyNftData = async (nftsAddres, tokenId)=>{
+export const getAlchemyNftData = async (nftsAddres, tokenId) => {
+
+    const dataToSend = {}
 
     const settings = {
         apiKey: process.env.ALCHEMY_API_KEY,
@@ -10,12 +12,78 @@ export const getAlchemyNftData = async (nftsAddres, tokenId)=>{
     };
 
     const alchemy = new Alchemy(settings);
-    const allNftsData = await alchemy.nft.getNftMetadata(nftsAddres, tokenId)
 
-    if (data.media && data.media.length > 0) {
-        
+    try {
+
+        const data = await alchemy.nft.getNftMetadata(nftsAddres, tokenId)
+
+        if (data.media && data.media.length > 0) {
+
+            let multimediaData = {
+                image: data.media[0].gateway,
+
+            }
+
+            if (data.rawMetadata) {
+
+                multimediaData = {
+                    ...multimediaData,
+                    ...(data.rawMetadata.attributes ? { attributes: data.rawMetadata.attributes } : {}),
+                    ...(data.rawMetadata.name ? { name: data.rawMetadata.name } : {}),
+                    ...(data.rawMetadata.description ? { description: data.rawMetadata.description } : {}),
+                    ...(data.rawMetadata.external_url ? { "external_ur": data.rawMetadata.external_url } : {}),
+                }
+
+
+
+            }
+
+            let collectionData = {}
+
+            if (data.contract.openSea && Object.keys(data.contract.openSea).length > 0) {
+
+
+                collectionData = {
+                    ...(data.contract.openSea.floorPrice ? { floorPrice: data.contract.openSea.floorPrice } : {}),
+                    ...(data.contract.openSea.collectionName ? { collectionName: data.contract.openSea.collectionName } : {}),
+                    ...(data.contract.openSea.safelistRequestStatus ? { colectionName: data.contract.openSea.safelistRequestStatus } : {}),
+                    ...(data.contract.openSea.imageUrl ? { imageUrl: data.contract.openSea.imageUrl } : {}),
+                    ...(data.contract.openSea.description ? { description: data.contract.openSea.description } : {}),
+                    ...(data.contract.openSea.externalUrl ? { externalUrl: data.contract.openSea.externalUrl } : {}),
+                    ...(data.contract.openSea.discordUrl ? { discordUrl: data.contract.openSea.discordUrl } : {}),
+                    ...(data.contract.openSea.twitterUsername ? { twitterUsername: data.contract.openSea.twitterUsername } : {}),
+                    ...(data.contract.openSea.lastIngestedAt ? { lastIngestedAt: data.contract.openSea.lastIngestedAt } : {})
+                }
+            }
+
+            if (Object.keys(multimediaData).length > 0) {
+
+                dataToSend.multimediaData = multimediaData
+            }
+
+            if (Object.keys(collectionData).length > 0) {
+                dataToSend.collectionData = collectionData
+            }
+
+
+
+        }
+
+        if (Object.keys(dataToSend).length > 0) return { isSucces: true, hasData: true, data: dataToSend }
+        return {
+            isSucces: true,
+            hasData: false
+        }
+
+
+
+    } catch (error) {
+
+        return {
+            isSucces: false
+        }
+
     }
-
 
 
 }
