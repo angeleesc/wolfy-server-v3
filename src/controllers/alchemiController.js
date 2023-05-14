@@ -154,13 +154,13 @@ export async function getFullNftData(req, res) {
 
         if (!orderResult.exists) {
 
-            return res.status(200).json({
+            res.status(200).json({
                 isSucces: true,
                 hasData: false,
                 message: "No exite esta orden en la base de datos"
             })
-
             return
+
         }
 
         const { blockChain,
@@ -191,13 +191,29 @@ export async function getFullNftData(req, res) {
 
             const alchemyData = await getAlchemyNftDataServices(colection, tokenId)
 
+            let metadataToSend
+
+
             if (alchemyData.isSucces) {
-                const metadataToSend = {
+                metadataToSend = {
                     ...alchemyData.data
                 }
-
                 dataToSend.alchemyMetada = metadataToSend
             }
+
+            if (metadataToSend) dataToSend.alchemyMetada = metadataToSend
+            dataToSend.colectionName = colectionName
+            dataToSend.colectionName = colectionSymbol
+            dataToSend.metadata = metadata
+            dataToSend.chainId = chainId
+            dataToSend.blockChain = blockChain
+
+            res.status(200).json(
+                dataToSend
+            )
+            return
+
+
 
         } else if (saleMethod === saleMethodOp.sales) {
             const contract = await conectMakertContrac(provider)
@@ -216,19 +232,26 @@ export async function getFullNftData(req, res) {
 
             dataToSend.tokenId = tokenID[0].toString()
 
+            let metadataToSend
+
             if (alchemyData.isSucces) {
-                const metadataToSend = {
+                metadataToSend = {
                     ...alchemyData.data
                 }
 
-                dataToSend.alchemyMetada = metadataToSend
-                dataToSend.colectionName = colectionName
-                dataToSend.colectionName = colectionSymbol
-                dataToSend.metadata = metadata
-                dataToSend.chainId = chainId
-                dataToSend.blockChain = blockChain
-
             }
+
+            if (metadataToSend) dataToSend.alchemyMetada = metadataToSend
+            dataToSend.colectionName = colectionName
+            dataToSend.colectionName = colectionSymbol
+            dataToSend.metadata = metadata
+            dataToSend.chainId = chainId
+            dataToSend.blockChain = blockChain
+
+            res.status(200).json(
+                dataToSend
+            )
+            return
 
 
 
@@ -252,7 +275,7 @@ export async function getFullNftData(req, res) {
 
     return res.status(200).send({
         isSucces: true,
-        message: "esta en la ruta donde obtiene todos lo detalles de la nft"
+        message: "esta en la ruta donde obtiene todos lo detalles de la nft",
     })
 
 
