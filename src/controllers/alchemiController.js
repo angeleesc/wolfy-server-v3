@@ -170,7 +170,7 @@ export async function getFullNftData(req, res) {
         dataToSend.price = currentPrice ? currentPrice : price
         dataToSend.quantity = onSale
         dataToSend.seller = seller,
-        dataToSend.saleMethod = saleMethod
+            dataToSend.saleMethod = saleMethod
         dataToSend.chainId = chainId
 
 
@@ -250,6 +250,7 @@ export async function getFullNftData(req, res) {
 
             if (alchemyData.isSucces) {
                 metadataToSend = {
+
                     ...alchemyData.data
                 }
 
@@ -264,7 +265,11 @@ export async function getFullNftData(req, res) {
 
 
             res.status(200).json(
-                dataToSend
+                {
+                    isSucces: true,
+                    hasData: true,
+                    ...dataToSend
+                }
             )
             return
 
