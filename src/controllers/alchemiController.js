@@ -164,7 +164,7 @@ export async function getFullNftData(req, res) {
         }
 
         const { blockChain,
-            chainId, colection, colectionName, colectionSymbol, currentPrice, endTime, initPrice, metadata, onSale, orderId, price, saleMethod, seller } = orderResult.data()
+            chainId, colection, colectionName, colectionSymbol, currentPrice, endTime, initPrice, metadata, onSale, orderId, price, saleMethod, seller, bestBidder } = orderResult.data()
 
         dataToSend.onSale = orderId
         dataToSend.price = currentPrice ? currentPrice : price
@@ -201,20 +201,29 @@ export async function getFullNftData(req, res) {
                 dataToSend.alchemyMetada = metadataToSend
             }
 
+
+            console.log("finalza")
+
+            console.log(endTime)
+
             if (metadataToSend) dataToSend.alchemyMetada = metadataToSend
+            if (bestBidder) dataToSend.bestBidder = bestBidder
+            dataToSend.endTime = endTime._seconds * 1000
             dataToSend.colectionName = colectionName
             dataToSend.colectionName = colectionSymbol
             dataToSend.metadata = metadata
             dataToSend.chainId = chainId
             dataToSend.blockChain = blockChain
+            dataToSend.bestBidder = bestBidder,
 
-            res.status(200).json(
-                {
-                    isSucces: true,
-                    hasData: true,
-                    ...dataToSend
-                }
-            )
+
+                res.status(200).json(
+                    {
+                        isSucces: true,
+                        hasData: true,
+                        ...dataToSend
+                    }
+                )
             return
 
 
@@ -251,6 +260,7 @@ export async function getFullNftData(req, res) {
             dataToSend.metadata = metadata
             dataToSend.chainId = chainId
             dataToSend.blockChain = blockChain
+
 
             res.status(200).json(
                 dataToSend
