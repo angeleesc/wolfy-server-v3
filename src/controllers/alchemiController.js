@@ -209,7 +209,11 @@ export async function getFullNftData(req, res) {
             dataToSend.blockChain = blockChain
 
             res.status(200).json(
-                dataToSend
+                {
+                    isSucces: true,
+                    hasData: true,
+                    ...dataToSend
+                }
             )
             return
 
