@@ -33,6 +33,7 @@ export const getAlchemyNftDataServices = async (nftsAddres, tokenId) => {
                     ...(data.rawMetadata.name ? { name: data.rawMetadata.name } : {}),
                     ...(data.rawMetadata.description ? { description: data.rawMetadata.description } : {}),
                     ...(data.rawMetadata.external_url ? { "external_ur": data.rawMetadata.external_url } : {}),
+                    
                 }
 
 
