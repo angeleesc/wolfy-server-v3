@@ -1,4 +1,4 @@
-import { GetAcutionOdersByBuyerServicer, getOrdersByUserServices, getOrdersServeces } from "../services/firebaseServicer.js"
+import { GetAcutionOdersByBuyerServicer, getBisdServices, getOrdersByUserServices, getOrdersServeces } from "../services/firebaseServicer.js"
 
 export const getOrders = async (req, res) => {
 
@@ -73,23 +73,23 @@ export const GetAcutionOdersByBuyer = async (req, res) => {
 
         console.log(id)
 
-       if(dataToResponse.isSuccess){
-        res.status(200).json({
-            isSuccess: true,
-            message: "estas en la ruta obtencion de las ofertas hechas por el usuario",
-            ...dataToResponse
-        })
+        if (dataToResponse.isSuccess) {
+            res.status(200).json({
+                isSuccess: true,
+                message: "estas en la ruta obtencion de las ofertas hechas por el usuario",
+                ...dataToResponse
+            })
 
-        return
-       }
+            return
+        }
 
-       throw new error("Ocurrion un erro en la consulta de la base de datos")
-        
+        throw new error("Ocurrion un erro en la consulta de la base de datos")
+
 
     } catch (error) {
 
         res.status(200).json({
-            isSuccess:false,
+            isSuccess: false,
             reason: "ocurrio un error mientras consultaba la bse de datos"
         })
 
@@ -97,5 +97,36 @@ export const GetAcutionOdersByBuyer = async (req, res) => {
 
     }
 
-    
+
+}
+
+export const getBidsByorder = async (req, res) => {
+
+    // console.log(req.id)
+
+    console.log("req.params.orderId")
+    console.log(req.params.orderId)
+
+    const bidREsult = await getBisdServices(req.params.orderId)
+
+    if (bidREsult.isSuccess) {
+
+
+        res.status(200).json({
+            isSuccess: true,
+            message: "esta en la rura de las orfertas de la subasta",
+            ...bidREsult
+        })
+
+        return
+
+    }
+
+
+    res.status(500).json({
+        ...bidREsult
+    })
+
+
+
 }

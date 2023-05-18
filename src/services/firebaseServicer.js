@@ -147,3 +147,51 @@ export const GetAcutionOdersByBuyerServicer = async (id) => {
 
 
 }
+
+export const getBisdServices = async (orderId) => {
+
+    const bidRef = db.collection("orders").doc(orderId).collection("bidders").orderBy("bid", "desc").limit(10)
+
+    try {
+        const result = await bidRef.get()
+
+        if (!result.empty) {
+
+            const dataToSend = []
+
+            result.forEach((bidder) => {
+
+                dataToSend.push({
+                    ...bidder.data()
+                })
+
+            })
+
+            return {
+                isSuccess: true,
+                hasData: true,
+                bidders: dataToSend
+            }
+
+        }else{
+            console.log("esta vacio")
+        }
+
+        return {
+            isSuccess: true,
+            hasData: false
+        }
+
+      
+
+    } catch (error) {
+
+        return {
+            isSuccess: false,
+            errorMessage: "ocurio un erro mientra consutamos en la base de datos"
+        }
+
+    }
+
+
+}
