@@ -199,9 +199,9 @@ export const getBisdServices = async (orderId) => {
 export const getFeaturesNftsForHeroSevrices = async () => {
 
     const dataTosend = []
-    const currentime = Date.now()
+    const currentime = new Date()
 
-    const topAuctionRef = db.collection("orders").where("endTime", "<=", currentime).orderBy("endTime", "desc").limit(1)
+    const topAuctionRef = db.collection("orders").where("endTime", ">=", currentime).orderBy("endTime", "desc").limit(1)
     const auctionREsult = await topAuctionRef.get()
     if (!auctionREsult.empty) {
         dataTosend.push({
@@ -209,6 +209,19 @@ export const getFeaturesNftsForHeroSevrices = async () => {
             ...auctionREsult.docs[0].data()
         })
     }
+
+    const highestPriceRef = db.collection("orders").orderBy("price", "desc").limit(1)
+    const hisghtestReasul = await highestPriceRef.get()
+    if (!hisghtestReasul.empty) {
+        dataTosend.push({
+            type: "nft",
+            ...hisghtestReasul.docs[0].data()
+        })
+    }
+
+
+    console.log("datos para enviar")
+    console.log(dataTosend)
 
     return dataTosend
 
