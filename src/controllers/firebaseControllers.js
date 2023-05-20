@@ -138,6 +138,8 @@ export const getFeaturesNftsForHero = async (req, res) => {
     const heroData = await getFeaturesNftsForHeroSevrices()
 
     res.status(200).json({
-        message: "esta en al ruta de descacados"
+        message: "esta en al ruta de descacados",
+        isSuccess:true,
+        heroData
     })
 }
