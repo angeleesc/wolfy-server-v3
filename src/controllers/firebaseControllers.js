@@ -1,4 +1,4 @@
-import { GetAcutionOdersByBuyerServicer, getBisdServices, getOrdersByUserServices, getOrdersServeces } from "../services/firebaseServicer.js"
+import { GetAcutionOdersByBuyerServicer, getBisdServices, getFeaturesNftsForHeroSevrices, getOrdersByUserServices, getOrdersServeces } from "../services/firebaseServicer.js"
 
 export const getOrders = async (req, res) => {
 
@@ -133,6 +133,9 @@ export const getBidsByorder = async (req, res) => {
 
 
 export const getFeaturesNftsForHero = async (req, res) => {
+
+
+    const heroData = await getFeaturesNftsForHeroSevrices()
 
     res.status(200).json({
         message: "esta en al ruta de descacados"

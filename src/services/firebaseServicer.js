@@ -173,7 +173,7 @@ export const getBisdServices = async (orderId) => {
                 bidders: dataToSend
             }
 
-        }else{
+        } else {
             console.log("esta vacio")
         }
 
@@ -182,7 +182,7 @@ export const getBisdServices = async (orderId) => {
             hasData: false
         }
 
-      
+
 
     } catch (error) {
 
@@ -193,5 +193,23 @@ export const getBisdServices = async (orderId) => {
 
     }
 
+
+}
+
+export const getFeaturesNftsForHeroSevrices = async () => {
+
+    const dataTosend = []
+    const currentime = Date.now()
+
+    const topAuctionRef = db.collection("orders").where("endTime", "<=", currentime).orderBy("endTime", "desc").limit(1)
+    const auctionREsult = await topAuctionRef.get()
+    if (!auctionREsult.empty) {
+        dataTosend.push({
+            type: "nft",
+            ...auctionREsult.docs[0].data()
+        })
+    }
+
+    return dataTosend
 
 }
