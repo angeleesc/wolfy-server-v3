@@ -1,4 +1,5 @@
 import { db } from "../firebase/admind.js"
+import { saleMethod } from "../helpers/global-constants.js"
 
 export const getOrdersServeces = async (fillter, wallet) => {
 
@@ -206,18 +207,56 @@ export const getFeaturesNftsForHeroSevrices = async () => {
     if (!auctionREsult.empty) {
         dataTosend.push({
             type: "nft",
-            ...auctionREsult.docs[0].data()
+            ...auctionREsult.docs[0].data(),
+            adsMessage: "No te pierdas la opotunidad, has tu mejor oferta"
+        
         })
     }
 
-    const highestPriceRef = db.collection("orders").orderBy("price", "desc").limit(1)
+    const highestPriceRef = db.collection("orders").where("saleMethod", "==" , saleMethod.sales).orderBy("price", "desc").limit(1)
     const hisghtestReasul = await highestPriceRef.get()
     if (!hisghtestReasul.empty) {
         dataTosend.push({
             type: "nft",
-            ...hisghtestReasul.docs[0].data()
+            ...hisghtestReasul.docs[0].data(),
+            adsMessage: "La Nft MAs esclusiva puede ser para ti"
         })
     }
+
+    const lowestPriceRef = db.collection("orders").where("saleMethod", "==" , saleMethod.sales).orderBy("price", "asc").limit(1)
+    const lowerPriceRsult = await lowestPriceRef.get()
+    if (!lowerPriceRsult.empty) {
+        dataTosend.push({
+            type: "nft",
+            ...lowerPriceRsult.docs[0].data(),
+            adsMessage: "Iniciate en el mundo de la nft con esta oferta"
+        })
+    }
+
+    const newEstOrderRef = db.collection("orders").orderBy("listingAt", "desc").limit(1)
+    const newEstOrderResult = await newEstOrderRef.get()
+
+    if (!newEstOrderResult.empty) {
+        dataTosend.push({
+            type: "nft",
+            ...newEstOrderResult.docs[0].data(),
+            adsMessage: "Compra esta nft antes que lo demas"
+        })
+    }
+
+    const oldestOrderRef = db.collection("orders").orderBy("listingAt", "asc").limit(1)
+    const oldestOrderREsult = await oldestOrderRef.get()
+
+
+    if (!oldestOrderREsult.empty) {
+        dataTosend.push({
+            type: "nft",
+            ...oldestOrderREsult.docs[0].data(),
+            adsMessage: "Aun estas a tiempo de comprarla"
+
+
+        })
+    }    
 
 
     console.log("datos para enviar")
