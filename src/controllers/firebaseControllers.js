@@ -139,7 +139,18 @@ export const getFeaturesNftsForHero = async (req, res) => {
 
     res.status(200).json({
         message: "esta en al ruta de descacados",
-        isSuccess:true,
+        isSuccess: true,
         heroData
     })
+}
+
+export const getOrdersByQuery = async (req, res) => {
+
+    console.log(req.query)
+
+    res.status(200).json({
+        isSuccess: true,
+        message: "estas en la ruta de obtencion de la ordenes por query"
+    })
+
 }
