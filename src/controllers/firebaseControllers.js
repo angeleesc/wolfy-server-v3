@@ -149,11 +149,32 @@ export const getOrdersByQuery = async (req, res) => {
     console.log(req.query)
 
 
-    const queryREsult = await getOrdersByQueryServices(req.query)
+    try {
+        const queryREsult = await getOrdersByQueryServices(req.query)
+        res.status(200).json({
+            isSuccess: true,
+            message: "estas en la ruta de obtencion de la ordenes por query",
+            ...queryREsult
+        })
+
+
+
+    } catch (error) {
+
+        res.status(500).json({
+            isSuccess: false,
+            message: "orccurio un error en la ruta, obtencion de las ordenes por query"
+        })
+
+    }
+
+    console.log("ox xd")
 
     res.status(200).json({
-        isSuccess: true,
-        message: "estas en la ruta de obtencion de la ordenes por query"
+        message: "no se hizo nada",
+        isSuccess: false
     })
+
+
 
 }

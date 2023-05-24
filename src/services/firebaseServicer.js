@@ -333,10 +333,20 @@ export const getOrdersByQueryServices = async (raWQuery) => {
 
         console.log(dataToSend)
 
+        return {
+            isSuccess: true,
+            hasData: true,
+            orders: dataToSend
+        }
+
+
     } else {
         console.log("noi hay resultado")
+        return {
+            isSuccess: true,
+            hasData: false
+        }
     }
-
 
 
 
