@@ -274,31 +274,66 @@ export const getOrdersByQueryServices = async (raWQuery) => {
 
 
     console.log("se obtuvo")
-    console.log(query)
+    // console.log(query)
 
 
     let ordersQuery = db.collection("orders")
 
     query.forEach(params => {
 
+        console.log(params)
+
+        console.log("queru a evaluar")
+
         if (params.type === "where") {
-            const { index, operator, value } = params
-            ordersQuery = ordersQuery.where(index, operator, value)
+            const { index, operator, value, valueType } = params
+
+            let valueParams = value
+
+            if (valueType === "date") {
+                valueParams = new Date(value)
+            }
+
+            ordersQuery = ordersQuery.where(index, operator, valueParams)
         }
+
+
+        if (params.type === "orderBy") {
+
+            const { index, orderDirection } = params
+            ordersQuery = ordersQuery.orderBy(index, "desc")
+
+
+        }
+
+        // ordersQuery.orderBy()
+
+
     })
+
+
+    // console.log(ordersQuery)
 
     const result = await ordersQuery.get()
 
     if (!result.empty) {
         console.log("hay resultado")
 
+        const dataToSend = []
+
         result.forEach(order => {
 
-            console.log(order.data())
+            // console.log(order.data())
+            dataToSend.push({
+                ...order.data(),
+                id: order.id
+            })
 
         })
 
-    }else{
+        console.log(dataToSend)
+
+    } else {
         console.log("noi hay resultado")
     }
 
