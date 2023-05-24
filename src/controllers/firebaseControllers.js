@@ -157,6 +157,8 @@ export const getOrdersByQuery = async (req, res) => {
             ...queryREsult
         })
 
+        return
+
 
 
     } catch (error) {
@@ -166,14 +168,9 @@ export const getOrdersByQuery = async (req, res) => {
             message: "orccurio un error en la ruta, obtencion de las ordenes por query"
         })
 
+        return
+
     }
-
-    console.log("ox xd")
-
-    res.status(200).json({
-        message: "no se hizo nada",
-        isSuccess: false
-    })
 
 
 
