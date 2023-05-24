@@ -1,4 +1,4 @@
-import { GetAcutionOdersByBuyerServicer, getBisdServices, getFeaturesNftsForHeroSevrices, getOrdersByUserServices, getOrdersServeces } from "../services/firebaseServicer.js"
+import { GetAcutionOdersByBuyerServicer, getBisdServices, getFeaturesNftsForHeroSevrices, getOrdersByQueryServices, getOrdersByUserServices, getOrdersServeces } from "../services/firebaseServicer.js"
 
 export const getOrders = async (req, res) => {
 
@@ -147,6 +147,9 @@ export const getFeaturesNftsForHero = async (req, res) => {
 export const getOrdersByQuery = async (req, res) => {
 
     console.log(req.query)
+
+
+    const queryREsult = await getOrdersByQueryServices(req.query)
 
     res.status(200).json({
         isSuccess: true,

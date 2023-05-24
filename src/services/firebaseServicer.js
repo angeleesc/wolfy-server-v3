@@ -209,11 +209,11 @@ export const getFeaturesNftsForHeroSevrices = async () => {
             type: "nft",
             ...auctionREsult.docs[0].data(),
             adsMessage: "No te pierdas la opotunidad, has tu mejor oferta"
-        
+
         })
     }
 
-    const highestPriceRef = db.collection("orders").where("saleMethod", "==" , saleMethod.sales).orderBy("price", "desc").limit(1)
+    const highestPriceRef = db.collection("orders").where("saleMethod", "==", saleMethod.sales).orderBy("price", "desc").limit(1)
     const hisghtestReasul = await highestPriceRef.get()
     if (!hisghtestReasul.empty) {
         dataTosend.push({
@@ -223,7 +223,7 @@ export const getFeaturesNftsForHeroSevrices = async () => {
         })
     }
 
-    const lowestPriceRef = db.collection("orders").where("saleMethod", "==" , saleMethod.sales).orderBy("price", "asc").limit(1)
+    const lowestPriceRef = db.collection("orders").where("saleMethod", "==", saleMethod.sales).orderBy("price", "asc").limit(1)
     const lowerPriceRsult = await lowestPriceRef.get()
     if (!lowerPriceRsult.empty) {
         dataTosend.push({
@@ -256,12 +256,53 @@ export const getFeaturesNftsForHeroSevrices = async () => {
 
 
         })
-    }    
+    }
 
 
     console.log("datos para enviar")
     console.log(dataTosend)
 
     return dataTosend
+
+}
+
+export const getOrdersByQueryServices = async (raWQuery) => {
+
+    // formateamos el archivo recibido en json
+
+    const query = JSON.parse(raWQuery.query)
+
+
+    console.log("se obtuvo")
+    console.log(query)
+
+
+    let ordersQuery = db.collection("orders")
+
+    query.forEach(params => {
+
+        if (params.type === "where") {
+            const { index, operator, value } = params
+            ordersQuery = ordersQuery.where(index, operator, value)
+        }
+    })
+
+    const result = await ordersQuery.get()
+
+    if (!result.empty) {
+        console.log("hay resultado")
+
+        result.forEach(order => {
+
+            console.log(order.data())
+
+        })
+
+    }else{
+        console.log("noi hay resultado")
+    }
+
+
+
 
 }
