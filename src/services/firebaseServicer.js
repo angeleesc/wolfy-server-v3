@@ -306,6 +306,10 @@ export const getOrdersByQueryServices = async (raWQuery) => {
 
         }
 
+        if(params.type== "limit" ){
+            ordersQuery = ordersQuery.limit(Number(params.value))
+        }
+
         // ordersQuery.orderBy()
 
 

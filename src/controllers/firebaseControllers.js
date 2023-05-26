@@ -147,6 +147,7 @@ export const getFeaturesNftsForHero = async (req, res) => {
 export const getOrdersByQuery = async (req, res) => {
 
     console.log(req.query)
+    console.log("en ruta query")
 
 
     try {
@@ -162,6 +163,9 @@ export const getOrdersByQuery = async (req, res) => {
 
 
     } catch (error) {
+
+        console.log("ocurio un error")
+        console.log(error)
 
         res.status(500).json({
             isSuccess: false,
